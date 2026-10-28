@@ -26,9 +26,6 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
-COPY --from=build /app/src/generated/prisma ./src/generated/prisma
-COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/prisma7.config.ts ./prisma7.config.ts
 
 EXPOSE 3000
 

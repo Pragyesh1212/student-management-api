@@ -1,6 +1,7 @@
 
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -55,18 +56,20 @@ export class S3Service {
   }
 
   async getImageUrl(key: string): Promise<string> {
-    return getSignedUrl(
-      this.s3,
-      new PutObjectCommand({
-        Bucket: this.bucketName,
-        Key: key,
-      }),
-      { expiresIn: 3600 },
-    ).catch(async () => {
+    try {
+      return await getSignedUrl(
+        this.s3,
+        new GetObjectCommand({
+          Bucket: this.bucketName,
+          Key: key,
+        }),
+        { expiresIn: 3600 },
+      );
+    } catch {
       throw new InternalServerErrorException(
         'Unable to generate image URL',
       );
-    });
+    }
   }
 
   async deleteImage(key: string): Promise<void> {
