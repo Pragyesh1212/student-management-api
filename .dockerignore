@@ -1,4 +1,4 @@
-@'
+
 node_modules
 dist
 coverage
@@ -10,4 +10,3 @@ src/generated/prisma
 *.tsbuildinfo
 npm-debug.log*
 .DS_Store
-'@ | Set-Content .dockerignore
